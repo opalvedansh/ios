@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); [print\\(c.get\\('client_info',{}\\).get\\('android_client_info',{}\\).get\\('package_name',''\\), [s.get\\('certificate_hash',''\\) for s in c.get\\('oauth_client',[]\\) if s.get\\('client_type'\\)==1]\\) for c in d.get\\('client',[]\\)]\")",
+      "Bash(flutter pub *)",
+      "Bash(flutter clean *)",
+      "Bash(flutter --version)",
+      "Bash(flutter analyze *)",
+      "Bash(npm run *)",
+      "PowerShell(Get-ChildItem c:\\\\appdev\\\\apps\\\\customer_app\\\\build\\\\web | Select-Object Name, @{N='Size';E={if\\($_.PSIsContainer\\){\"DIR\"}else{\"{0:N0} KB\" -f \\($_.Length/1KB\\)}}})",
+      "PowerShell(flutter *)"
+    ]
+  }
+}
