@@ -189,6 +189,7 @@ class _OtpVerificationScreenState
   Widget _buildOtpField(int index) {
     return SizedBox(
       width: 50,
+      height: 68,
       child: TextField(
         controller: _otpControllers[index],
         focusNode: _focusNodes[index],
