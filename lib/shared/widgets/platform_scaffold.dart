@@ -50,7 +50,12 @@ class PlatformScaffold extends StatelessWidget {
                 automaticallyImplyLeading: showBackButton,
               )
             : null,
-        child: SafeArea(child: body),
+        child: SafeArea(
+          child: Material(
+            type: MaterialType.transparency,
+            child: body,
+          ),
+        ),
       );
     }
 
