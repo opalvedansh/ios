@@ -243,6 +243,8 @@ class _OtpVerificationScreenState
       child: TextField(
         controller: _otpControllers[index],
         focusNode: _focusNodes[index],
+        autofocus: index == 0,
+        enabled: !_isLoading,
         textAlign: TextAlign.center,
         keyboardType: TextInputType.number,
         maxLength: 1,
