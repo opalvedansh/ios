@@ -195,7 +195,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     return Container(
       decoration: BoxDecoration(
-        color: accentColor.withOpacity(0.1),
+        color: accentColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       padding: const EdgeInsets.all(16),
@@ -204,7 +204,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: accentColor.withOpacity(0.2),
+              color: accentColor.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
             child: Icon(Icons.calendar_today, color: accentColor),
@@ -280,7 +280,7 @@ class _VehicleSwitcher extends ConsumerWidget {
               child: ChoiceChip(
                 label: Text(label),
                 selected: isSelected,
-                selectedColor: accentColor.withOpacity(0.2),
+                selectedColor: accentColor.withValues(alpha: 0.2),
                 labelStyle: TextStyle(
                   color: isSelected ? accentColor : null,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,

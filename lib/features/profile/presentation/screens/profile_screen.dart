@@ -65,7 +65,7 @@ class ProfileScreen extends ConsumerWidget {
                       Divider(
                         height: 1,
                         color: isDark
-                            ? AppTheme.darkShadowLight.withOpacity(0.3)
+                            ? AppTheme.darkShadowLight.withValues(alpha: 0.3)
                             : Colors.grey.shade200,
                       ),
                       _buildInfoTile(
@@ -102,7 +102,7 @@ class ProfileScreen extends ConsumerWidget {
                         Divider(
                           height: 1,
                           color: isDark
-                              ? AppTheme.darkShadowLight.withOpacity(0.3)
+                              ? AppTheme.darkShadowLight.withValues(alpha: 0.3)
                               : Colors.grey.shade200,
                         ),
                         _buildInfoTile(
@@ -114,7 +114,7 @@ class ProfileScreen extends ConsumerWidget {
                         Divider(
                           height: 1,
                           color: isDark
-                              ? AppTheme.darkShadowLight.withOpacity(0.3)
+                              ? AppTheme.darkShadowLight.withValues(alpha: 0.3)
                               : Colors.grey.shade200,
                         ),
                         _buildInfoTile(

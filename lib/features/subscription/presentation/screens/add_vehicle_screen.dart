@@ -9,9 +9,9 @@ class AddVehicleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformScaffold(
+    return const PlatformScaffold(
       title: 'Add Vehicle',
-      body: const PlanSelectionView(),
+      body: PlanSelectionView(),
     );
   }
 }

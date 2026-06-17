@@ -79,7 +79,7 @@ class _AttendanceScreenState extends ConsumerState<AttendanceScreen> {
         color: isDark ? AppTheme.darkSurface : Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.05),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -114,7 +114,7 @@ class _AttendanceScreenState extends ConsumerState<AttendanceScreen> {
                   color: isSelected
                       ? accentColor
                       : isDark
-                          ? AppTheme.darkShadowLight.withOpacity(0.4)
+                          ? AppTheme.darkShadowLight.withValues(alpha: 0.4)
                           : Colors.grey.shade200,
                   width: 1,
                 ),
@@ -283,7 +283,7 @@ class _AttendanceScreenState extends ConsumerState<AttendanceScreen> {
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: isDark
-                      ? AppTheme.darkShadowLight.withOpacity(0.4)
+                      ? AppTheme.darkShadowLight.withValues(alpha: 0.4)
                       : Colors.grey.shade200,
                 ),
               ),
@@ -314,9 +314,9 @@ class _AttendanceScreenState extends ConsumerState<AttendanceScreen> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withOpacity(0.2)),
+        border: Border.all(color: color.withValues(alpha: 0.2)),
       ),
       child: Row(
         children: [
@@ -344,7 +344,7 @@ class _AttendanceScreenState extends ConsumerState<AttendanceScreen> {
               Text(
                 'Finished at $time',
                 style: TextStyle(
-                  color: color.withOpacity(0.8),
+                  color: color.withValues(alpha: 0.8),
                   fontSize: 14,
                 ),
               ),
@@ -370,7 +370,7 @@ class _AttendanceScreenState extends ConsumerState<AttendanceScreen> {
           Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(icon, size: 64, color: color),

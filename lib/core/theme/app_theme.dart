@@ -134,7 +134,7 @@ class AppTheme {
         color: darkSurface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: darkShadowLight.withOpacity(0.4)),
+          side: BorderSide(color: darkShadowLight.withValues(alpha: 0.4)),
         ),
         margin: EdgeInsets.zero,
       ),
@@ -157,11 +157,11 @@ class AppTheme {
         fillColor: darkSurfaceElevated,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: darkShadowLight.withOpacity(0.4)),
+          borderSide: BorderSide(color: darkShadowLight.withValues(alpha: 0.4)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: darkShadowLight.withOpacity(0.4)),
+          borderSide: BorderSide(color: darkShadowLight.withValues(alpha: 0.4)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -224,24 +224,24 @@ class AppTheme {
       boxShadow: isDark
           ? [
               BoxShadow(
-                color: darkShadowLight.withOpacity(0.80),
+                color: darkShadowLight.withValues(alpha: 0.80),
                 offset: const Offset(-5, -5),
                 blurRadius: 10,
               ),
               BoxShadow(
-                color: darkShadowDark.withOpacity(0.90),
+                color: darkShadowDark.withValues(alpha: 0.90),
                 offset: const Offset(5, 5),
                 blurRadius: 10,
               ),
             ]
           : [
               BoxShadow(
-                color: const Color(0xFFFFFFFF).withOpacity(0.85),
+                color: const Color(0xFFFFFFFF).withValues(alpha: 0.85),
                 offset: const Offset(-6, -6),
                 blurRadius: 12,
               ),
               BoxShadow(
-                color: const Color(0xFFC8D0DA).withOpacity(0.90),
+                color: const Color(0xFFC8D0DA).withValues(alpha: 0.90),
                 offset: const Offset(6, 6),
                 blurRadius: 12,
               ),
@@ -254,7 +254,7 @@ class AppTheme {
     return BoxDecoration(
       boxShadow: [
         BoxShadow(
-          color: color.withOpacity(isDark ? 0.45 : 0.40),
+          color: color.withValues(alpha: isDark ? 0.45 : 0.40),
           offset: const Offset(0, 4),
           blurRadius: isDark ? 20 : 16,
           spreadRadius: isDark ? 3 : 2,

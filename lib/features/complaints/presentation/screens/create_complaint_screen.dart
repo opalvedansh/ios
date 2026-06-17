@@ -127,6 +127,7 @@ class _CreateComplaintScreenState
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
+                // ignore: deprecated_member_use
                 value: _category,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -200,7 +201,7 @@ class _CreateComplaintScreenState
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: isDark
-                            ? AppTheme.darkShadowLight.withOpacity(0.5)
+                            ? AppTheme.darkShadowLight.withValues(alpha: 0.5)
                             : Colors.grey.shade300,
                       ),
                       borderRadius: BorderRadius.circular(8),

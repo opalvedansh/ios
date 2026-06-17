@@ -25,7 +25,7 @@ class SupervisorInfoCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: primaryColor.withOpacity(0.1),
+                color: primaryColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -68,7 +68,7 @@ class SupervisorInfoCard extends StatelessWidget {
               // Supervisor avatar
               CircleAvatar(
                 radius: 32,
-                backgroundColor: primaryColor.withOpacity(0.1),
+                backgroundColor: primaryColor.withValues(alpha: 0.1),
                 child: Text(
                   supervisor!.name.substring(0, 1).toUpperCase(),
                   style: TextStyle(
@@ -113,7 +113,7 @@ class SupervisorInfoCard extends StatelessWidget {
                 onPressed: () => _callSupervisor(supervisor!.phone),
                 icon: Icon(Icons.phone, color: successColor),
                 style: IconButton.styleFrom(
-                  backgroundColor: successColor.withOpacity(0.1),
+                  backgroundColor: successColor.withValues(alpha: 0.1),
                 ),
               ),
             ],

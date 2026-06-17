@@ -90,7 +90,7 @@ class PlatformTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: isDark 
-                    ? AppTheme.darkShadowLight.withOpacity(0.4) 
+                    ? AppTheme.darkShadowLight.withValues(alpha: 0.4) 
                     : CupertinoColors.systemGrey4,
               ),
             ),

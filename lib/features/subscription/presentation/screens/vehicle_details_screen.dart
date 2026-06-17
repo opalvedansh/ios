@@ -462,10 +462,10 @@ class _VehicleDetailsScreenState extends ConsumerState<VehicleDetailsScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: accentColor.withOpacity(isDark ? 0.15 : 0.1),
+        color: accentColor.withValues(alpha: isDark ? 0.15 : 0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: accentColor.withOpacity(isDark ? 0.35 : 0.2),
+          color: accentColor.withValues(alpha: isDark ? 0.35 : 0.2),
         ),
       ),
       child: Row(
@@ -473,7 +473,7 @@ class _VehicleDetailsScreenState extends ConsumerState<VehicleDetailsScreen> {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: accentColor.withOpacity(0.15),
+              color: accentColor.withValues(alpha: 0.15),
               shape: BoxShape.circle,
             ),
             child: Icon(Icons.directions_car, color: accentColor, size: 22),

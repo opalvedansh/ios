@@ -1,23 +1,38 @@
-// ignore: deprecated_member_use
-import 'dart:js' as js;
+// Web implementation of RazorpayService using dart:js_interop (Dart ≥ 3.3)
+// ignore_for_file: avoid_web_libraries_in_flutter
+import 'dart:js_interop';
 import '../constants/app_constants.dart';
+
+// ── Minimal JS interop bindings ──────────────────────────────────────────────
+
+@JS('Razorpay')
+@staticInterop
+class _RazorpayJs {
+  external factory _RazorpayJs(JSObject options);
+}
+
+extension _RazorpayJsExt on _RazorpayJs {
+  external void on(JSString event, JSFunction handler);
+  external void open();
+}
+
+// ── Public Dart types ─────────────────────────────────────────────────────────
 
 class RazorpayPaymentSuccess {
   const RazorpayPaymentSuccess({this.paymentId});
-
   final String? paymentId;
 }
 
 class RazorpayPaymentFailure {
   const RazorpayPaymentFailure({this.message});
-
   final String? message;
 }
+
+// ── Service ───────────────────────────────────────────────────────────────────
 
 class RazorpayService {
   void Function(RazorpayPaymentSuccess)? _onSuccess;
   void Function(RazorpayPaymentFailure)? _onError;
-  void Function()? _onWalletSelection;
 
   void initialize({
     required void Function(RazorpayPaymentSuccess response) onSuccess,
@@ -26,7 +41,6 @@ class RazorpayService {
   }) {
     _onSuccess = onSuccess;
     _onError = onError;
-    _onWalletSelection = onWalletSelection;
   }
 
   Future<void> openSubscriptionCheckout({
@@ -37,26 +51,8 @@ class RazorpayService {
     final capturedOnSuccess = _onSuccess;
     final capturedOnError = _onError;
 
-    // Success: Razorpay calls handler(response) with payment details
-    final successHandler =
-        // ignore: deprecated_member_use
-        js.allowInterop((js.JsObject response) {
-      final paymentId = response['razorpay_payment_id'] as String?;
-      capturedOnSuccess?.call(RazorpayPaymentSuccess(paymentId: paymentId));
-    });
-
-    // Failure: fires on the 'payment.failed' event
-    final failureHandler =
-        // ignore: deprecated_member_use
-        js.allowInterop((js.JsObject response) {
-      final error = response['error'];
-      final message =
-          error is js.JsObject ? error['description'] as String? : null;
-      capturedOnError?.call(RazorpayPaymentFailure(message: message));
-    });
-
-    // ignore: deprecated_member_use
-    final options = js.JsObject.jsify(<String, dynamic>{
+    // Build the options map and convert to a JS object via jsify
+    final optionsMap = <String, dynamic>{
       'key': AppConstants.razorpayKeyId,
       'subscription_id': razorpaySubscriptionId,
       'name': 'ZepWash',
@@ -65,13 +61,28 @@ class RazorpayService {
         'contact': userPhone,
         'name': userName,
       },
-      'handler': successHandler,
-    });
+      'handler': (JSObject response) {
+        // response.razorpay_payment_id
+        final map = (response.dartify() as Map?)?.cast<String, dynamic>();
+        final paymentId = map?['razorpay_payment_id'] as String?;
+        capturedOnSuccess?.call(RazorpayPaymentSuccess(paymentId: paymentId));
+      }.toJS,
+    };
 
-    // ignore: deprecated_member_use
-    final rzp = js.JsObject(js.context['Razorpay'] as js.JsFunction, [options]);
-    rzp.callMethod('on', ['payment.failed', failureHandler]);
-    rzp.callMethod('open');
+    final jsOptions = optionsMap.jsify()! as JSObject;
+    final rzp = _RazorpayJs(jsOptions);
+
+    rzp.on(
+      'payment.failed'.toJS,
+      (JSObject response) {
+        final map = (response.dartify() as Map?)?.cast<String, dynamic>();
+        final error = map?['error'] as Map<dynamic, dynamic>?;
+        final message = error?['description'] as String?;
+        capturedOnError?.call(RazorpayPaymentFailure(message: message));
+      }.toJS,
+    );
+
+    rzp.open();
   }
 
   void dispose() {}
