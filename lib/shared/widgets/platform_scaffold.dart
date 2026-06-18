@@ -52,7 +52,7 @@ class PlatformScaffold extends StatelessWidget {
             : null,
         child: SafeArea(
           child: Material(
-            type: MaterialType.transparency,
+            color: Colors.transparent,
             child: body,
           ),
         ),

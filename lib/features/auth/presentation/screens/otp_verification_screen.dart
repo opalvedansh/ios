@@ -261,6 +261,12 @@ class _OtpVerificationScreenState
           contentPadding: const EdgeInsets.symmetric(vertical: 16),
         ),
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        onTap: () {
+          if (!_isLoading) {
+            _focusNodes[index].requestFocus();
+            SystemChannels.textInput.invokeMethod('TextInput.show');
+          }
+        },
         onChanged: (value) {
           // Handle paste — if somehow multiple chars land here, distribute them
           if (value.length > 1) {
