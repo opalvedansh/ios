@@ -55,12 +55,12 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDerteCHtmMg6Y7pVhPkVeXgMeiIH8RsdU',
-    appId: '1:528614299140:ios:fbf499453685c3a35c4751',
-    messagingSenderId: '528614299140',
-    projectId: 'zepwashofficial-54555',
-    storageBucket: 'zepwashofficial-54555.firebasestorage.app',
-    iosBundleId: 'com.zepwash.zepwash',
+    apiKey: 'AIzaSyCrh_Nc_WRfPFeH98dj7RClyMGgguZKSyg',
+    appId: '1:547993200819:ios:682f4d64c03f8a8fe5e8c6',
+    messagingSenderId: '547993200819',
+    projectId: 'zepwash-prod',
+    storageBucket: 'zepwash-prod.firebasestorage.app',
+    iosBundleId: 'com.zepwash.customerApp',
   );
 
   static const FirebaseOptions web = FirebaseOptions(

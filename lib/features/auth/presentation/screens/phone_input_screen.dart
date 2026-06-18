@@ -40,7 +40,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
       final reqId = await PhoneAuthHandler.sendOTP(phoneForMsg91);
       if (!mounted) return;
       setState(() => _isLoading = false);
-      context.go('/auth/otp', extra: {
+      context.push('/auth/otp', extra: {
         'phone': '+91$digits',
         'reqId': reqId,
       });

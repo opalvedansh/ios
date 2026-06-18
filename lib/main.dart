@@ -95,6 +95,11 @@ class _ZepWashAppState extends ConsumerState<ZepWashApp> {
         theme: isDark ? AppTheme.cupertinoDark() : AppTheme.cupertinoLight(),
         routerConfig: router,
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: const [
+          DefaultMaterialLocalizations.delegate,
+          DefaultCupertinoLocalizations.delegate,
+          DefaultWidgetsLocalizations.delegate,
+        ],
         // Override platformBrightness so CupertinoColors adaptive palette
         // resolves correctly based on our app-level theme toggle.
         builder: (ctx, child) => MediaQuery(
