@@ -124,6 +124,21 @@ class _OtpVerificationScreenState
     setState(() => _isLoading = true);
 
     try {
+      // DEMO ACCOUNT BYPASS
+      if (_reqId == 'DEMO_REQ_ID') {
+        if (otp == '1234') {
+          await firebase_auth.FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: 'applereview@zepwash.com',
+            password: 'AppleReview123!',
+          );
+          if (!mounted) return;
+          context.go('/home');
+          return;
+        } else {
+          throw Exception('Invalid demo OTP');
+        }
+      }
+
       // Step 1: Verify OTP with MSG91 → get JWT access token
       final accessToken = await PhoneAuthHandler.verifyOTP(_reqId, otp);
 
@@ -152,6 +167,12 @@ class _OtpVerificationScreenState
 
   Future<void> _resendOTP() async {
     try {
+      // DEMO ACCOUNT BYPASS
+      if (_reqId == 'DEMO_REQ_ID') {
+        showPlatformSuccess(context, 'Demo OTP is always 1234');
+        return;
+      }
+
       final newReqId = await PhoneAuthHandler.retryOTP(_reqId);
       if (!mounted) return;
       setState(() => _reqId = newReqId);

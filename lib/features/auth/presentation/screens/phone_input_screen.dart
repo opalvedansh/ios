@@ -37,6 +37,17 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
     setState(() => _isLoading = true);
 
     try {
+      // DEMO ACCOUNT BYPASS
+      if (digits == '5555555555') {
+        if (!mounted) return;
+        setState(() => _isLoading = false);
+        context.push('/auth/otp', extra: {
+          'phone': '+91$digits',
+          'reqId': 'DEMO_REQ_ID',
+        });
+        return;
+      }
+
       final reqId = await PhoneAuthHandler.sendOTP(phoneForMsg91);
       if (!mounted) return;
       setState(() => _isLoading = false);
