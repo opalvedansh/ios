@@ -124,18 +124,23 @@ class _OtpVerificationScreenState
     setState(() => _isLoading = true);
 
     try {
-      // DEMO ACCOUNT BYPASS
+      // DEMO ACCOUNT BYPASS (for Apple App Store review)
+      // Uses the same custom-token flow as real users — no Email/Password
+      // provider needed, so firebase_auth/operation-not-allowed never fires.
       if (_reqId == 'DEMO_REQ_ID') {
         if (otp == '1234') {
-          await firebase_auth.FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: 'applereview@zepwash.com',
-            password: 'AppleReview123!',
-          );
+          final functions = FirebaseFunctions.instanceFor(region: 'asia-south1');
+          final result = await functions
+              .httpsCallable('getDemoCustomToken')
+              .call();
+          final customToken = result.data['customToken'] as String;
+          await firebase_auth.FirebaseAuth.instance
+              .signInWithCustomToken(customToken);
           if (!mounted) return;
           context.go('/home');
           return;
         } else {
-          throw Exception('Invalid demo OTP');
+          throw Exception('Invalid OTP. Please try again.');
         }
       }
 
