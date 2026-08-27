@@ -7,7 +7,7 @@
 	<key>teamID</key>
 	<string>7JAHVQWHUL</string>
 	<key>bundleIdentifier</key>
-	<string>com.zepwash.customerApp</string>
+	<string>com.zepwash.zepwash</string>
 	<key>uploadBitcode</key>
 	<false/>
 	<key>compileBitcode</key>
