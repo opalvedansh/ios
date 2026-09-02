@@ -38,13 +38,9 @@ class OtpVerificationScreen extends ConsumerStatefulWidget {
 
 class _OtpVerificationScreenState
     extends ConsumerState<OtpVerificationScreen> {
-  // 4-digit OTP to match MSG91 template configuration
-  static const int _otpLength = 4;
-
-  final List<TextEditingController> _otpControllers =
-      List.generate(_otpLength, (_) => TextEditingController());
-  final List<FocusNode> _focusNodes =
-      List.generate(_otpLength, (_) => FocusNode());
+  late final int _otpLength;
+  late final List<TextEditingController> _otpControllers;
+  late final List<FocusNode> _focusNodes;
 
   bool _isLoading = false;
   int _resendTimer = 30;
@@ -55,6 +51,9 @@ class _OtpVerificationScreenState
   void initState() {
     super.initState();
     _reqId = widget.reqId;
+    _otpLength = _reqId == 'DEMO_REQ_ID' ? 6 : 4;
+    _otpControllers = List.generate(_otpLength, (_) => TextEditingController());
+    _focusNodes = List.generate(_otpLength, (_) => FocusNode());
     _startResendTimer();
   }
 
@@ -125,17 +124,43 @@ class _OtpVerificationScreenState
 
     try {
       // DEMO ACCOUNT BYPASS (for Apple App Store review)
-      // Uses the same custom-token flow as real users — no Email/Password
-      // provider needed, so firebase_auth/operation-not-allowed never fires.
       if (_reqId == 'DEMO_REQ_ID') {
-        if (otp == '1234') {
-          final functions = FirebaseFunctions.instanceFor(region: 'asia-south1');
-          final result = await functions
-              .httpsCallable('getDemoCustomToken')
-              .call();
-          final customToken = result.data['customToken'] as String;
-          await firebase_auth.FirebaseAuth.instance
-              .signInWithCustomToken(customToken);
+        if (otp == '123456') {
+          // Authenticate using Firebase's native "Test Phone Numbers" feature
+          // IMPORTANT: You MUST add +915555555555 and 123456 in Firebase Console ->
+          // Authentication -> Sign-in method -> Phone -> Phone numbers for testing.
+          final completer = Completer<void>();
+          
+          await firebase_auth.FirebaseAuth.instance.verifyPhoneNumber(
+            phoneNumber: widget.phoneNumber,
+            verificationCompleted: (credential) async {
+              try {
+                await firebase_auth.FirebaseAuth.instance.signInWithCredential(credential);
+                if (!completer.isCompleted) completer.complete();
+              } catch (e) {
+                if (!completer.isCompleted) completer.completeError(e);
+              }
+            },
+            verificationFailed: (e) {
+              if (!completer.isCompleted) completer.completeError(e);
+            },
+            codeSent: (verificationId, resendToken) async {
+              try {
+                final credential = firebase_auth.PhoneAuthProvider.credential(
+                  verificationId: verificationId,
+                  smsCode: '123456',
+                );
+                await firebase_auth.FirebaseAuth.instance.signInWithCredential(credential);
+                if (!completer.isCompleted) completer.complete();
+              } catch (e) {
+                if (!completer.isCompleted) completer.completeError(e);
+              }
+            },
+            codeAutoRetrievalTimeout: (verificationId) {},
+          );
+          
+          await completer.future;
+          
           if (!mounted) return;
           context.go('/home');
           return;
@@ -174,7 +199,7 @@ class _OtpVerificationScreenState
     try {
       // DEMO ACCOUNT BYPASS
       if (_reqId == 'DEMO_REQ_ID') {
-        showPlatformSuccess(context, 'Demo OTP is always 1234');
+        showPlatformSuccess(context, 'Demo OTP is always 123456');
         return;
       }
 
@@ -232,7 +257,12 @@ class _OtpVerificationScreenState
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children:
-                  List.generate(_otpLength, (index) => _buildOtpField(index)),
+                  List.generate(_otpLength, (index) => Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: _buildOtpField(index),
+                    ),
+                  )),
             ),
             const SizedBox(height: 24),
 
@@ -264,7 +294,6 @@ class _OtpVerificationScreenState
 
   Widget _buildOtpField(int index) {
     return SizedBox(
-      width: 60,
       height: 72,
       child: TextField(
         controller: _otpControllers[index],
