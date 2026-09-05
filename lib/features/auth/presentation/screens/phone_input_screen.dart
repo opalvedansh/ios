@@ -139,6 +139,22 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
 
                 const Spacer(flex: 2),
 
+                // Staff / reviewer email login
+                Center(
+                  child: GestureDetector(
+                    onTap: () => context.push('/auth/email'),
+                    child: Text(
+                      'Login with Email',
+                      style: AppTheme.resolvedBodySmall(context).copyWith(
+                        color: AppTheme.primary,
+                        decoration: TextDecoration.underline,
+                        decorationColor: AppTheme.primary,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+
                 Text(
                   'By continuing, you agree to our Terms of Service and Privacy Policy',
                   style: AppTheme.resolvedBodySmall(context),

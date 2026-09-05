@@ -9,6 +9,7 @@ import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/screens/onboarding_screen.dart';
 import '../../features/auth/presentation/screens/phone_input_screen.dart';
 import '../../features/auth/presentation/screens/otp_verification_screen.dart';
+import '../../features/auth/presentation/screens/email_login_screen.dart';
 import '../../features/auth/presentation/screens/web_landing_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/subscription/presentation/screens/add_vehicle_screen.dart';
@@ -125,6 +126,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             reqId: extra?['reqId'] as String? ?? '',
           );
         },
+      ),
+      GoRoute(
+        path: '/auth/email',
+        name: 'email-login',
+        builder: (context, state) => const EmailLoginScreen(),
       ),
       GoRoute(
         path: '/home',
